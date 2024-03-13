@@ -51,6 +51,7 @@ print(arrNew)
 x, y = zip(*arrNew)
 
 # Plot the original points and the modified points
+
 plt.plot(x, y, marker='o', linestyle='-', color='r', label='Modified Points')
 
 plt.title('Modified Points on Cartesian Diagram')
