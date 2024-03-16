@@ -32,6 +32,12 @@ def addListOfPoint(isLeft: bool, iterasi: int, listPoint: list[tuple[float, floa
         rightSide.append(listPoint[-1])
         return addListOfPoint(True, iterasi - 1, leftSide) + addListOfPoint(False, iterasi - 1, rightSide)
 
+def DnC_bezier_curve(iterasi: int, listPoint: list[tuple[float, float]]):
+    if iterasi == 0:
+        return listPoint
+    else:
+        return addListOfPoint(True, iterasi, listPoint)
+
 # pairOfPoint = [(1, 1), (3,1), (1, 2), (2,3)]
 # pairOfPoint = [(1, 2), (3,1), (3, 3), (0,1)]
 # pairOfPoint = [(3, 1), (1,3), (3, 3), (1,1)]
@@ -45,8 +51,8 @@ start_time = time.time()
 ans: list[tuple[float, float]] = addListOfPoint(True, 20, pairOfPoint)
 end_time = time.time()
 execution_time = end_time - start_time
-print(len(ans))
-print("Execution time:", execution_time, "seconds")
+# print(len(ans))
+# print("Execution time:", execution_time, "seconds")
 x, y = zip(*ans)
 plt.plot(x, y, marker='o', linestyle='-', markersize=2)
 # for i in range(1,5):
@@ -58,4 +64,4 @@ plt.title('Plot of Lists of Points')
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
 plt.grid(True)
-plt.show()
+# plt.show()
