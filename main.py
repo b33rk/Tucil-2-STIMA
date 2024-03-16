@@ -1,16 +1,18 @@
 import sys
+import time
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 from bruteforce import *
-from algo4 import *
+from dnc import *
 
 class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.ani = None
         self.setUI()
     
     def setUI(self):
@@ -72,6 +74,11 @@ class MainWindow(QMainWindow):
         self.button.clicked.connect(self.plot_draw_dnc)
         self.layout.addWidget(self.input_bezier)
 
+        # animate
+        self.button_animate = QPushButton("Animate") 
+        self.button_animate.clicked.connect(self.plot_animate_dnc)
+        self.layout.addWidget(self.button_animate)
+
         box = QHBoxLayout()
         box.addWidget(self.input_iterasi, 1)
         box.addWidget(self.button, 2)
@@ -108,6 +115,7 @@ class MainWindow(QMainWindow):
 
         # button to process
         self.button = QPushButton("Enter") 
+        self.button.clicked.connect(self.plot_draw_bruteforce)
         self.button.clicked.connect(self.plot_draw_bruteforce)
         self.layout.addWidget(self.input_bezier)
 
@@ -146,26 +154,79 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print("Error:", e)
 
+    def plot_animate_dnc(self):
+        input_bezier_text = self.input_bezier.text()
+        input_iterasi = self.input_iterasi.text()
+        try:
+            list_points: list[Point] = eval(input_bezier_text)
+            iterasi: float = eval(input_iterasi)
+
+            self.figure.clear()
+
+            ax = self.figure.add_subplot(111)
+            ax.grid(True)
+            ax.set_title('Bezier Curve on Divide and Conquer')
+            ax.set_xlabel('X-axis')
+            ax.set_ylabel('Y-axis')
+
+            line, = ax.plot([], [], marker='o', linestyle='-', markersize=5)
+
+            def init():
+                line.set_data([], [])
+                return line,
+
+            def animate(iterasi):
+                points = DnC_bezier_curve(iterasi,list_points)
+                x, y = zip(*points)
+                line.set_data(x, y)
+                ax.set_xlim(min(x) - 1, max(x) + 1)
+                ax.set_ylim(min(y) - 1, max(y) + 1)
+                return line,
+
+            # Create the animation
+            self.ani = FuncAnimation(fig, animate, frames=iterasi, init_func=init, interval = 1000, blit=True, repeat = False)
+
+            self.canvas.draw()
+            self.show_animation()
+        except Exception as e:
+            print("Error:", e)
+
+    def show_animation(self):
+        # Create a new dialog to display the animation
+        dialog = QDialog()
+        dialog.setWindowTitle("Animation")
+        layout = QVBoxLayout(dialog)
+        
+        # Embed the canvas in the dialog
+        canvas = FigureCanvas(self.figure)
+        layout.addWidget(canvas)
+        
+        # Add a button to close the dialog
+        button_close = QPushButton("Close")
+        button_close.clicked.connect(dialog.close)
+        layout.addWidget(button_close)
+        
+        # Show the dialog
+        dialog.exec_()
+
     def plot_draw_dnc(self): 
         input_bezier_text = self.input_bezier.text()
-        input_iterasi = self.input_iterasi.text() 
+        input_iterasi = self.input_iterasi.text()
         try: 
             list_points: list[Point] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
             result: list[Point]
-            if(iterasi >= 0):
-                result: list[Point] = addListOfPoint(True, iterasi, list_points)
-
             ax = self.figure.add_subplot(111)
             ax.clear()
 
             x_core, y_core = zip(*list_points)
-            x_curve, y_curve = zip(*result)
-
             ax.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
-            ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Bezier Curve')
+            for i in range(1,iterasi+1):
+                result: list[Point] = addListOfPoint(True, i, list_points)
+                x_curve, y_curve = zip(*result)
+                ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
 
-            ax.set_title('Bezier Curve on Brute force')
+            ax.set_title('Bezier Curve on Divide and Conquer')
             ax.set_xlabel('X-axis')
             ax.set_ylabel('Y-axis')
             ax.legend()
@@ -175,6 +236,7 @@ class MainWindow(QMainWindow):
             ax.remove()
         except Exception as e:
             print("Error:", e)
+
 
 
 if __name__ == "__main__":
