@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 Point = tuple[float, float]
 
 def findMiddlePoint(point1: Point, point2: Point) -> Point:
@@ -43,7 +44,7 @@ def process(listPoint: list[Point], itr: int) -> list[list[Point]]:
     for i in range(1, itr+1): 
             ans: list[Point] = findListOfPointD(listPoint, i, ctr)
             if i > 1:
-                temp: list[Point] = [item for item in ans if item not in list_listPoint[idx]]
+                temp =  [item for item in ans if item not in (list_listPoint[idx])]
                 temp = findListOfPoint(temp)
                 temp.insert(0, initialPoint)
                 temp.insert(len(temp), lastPoint) 
@@ -54,7 +55,41 @@ def process(listPoint: list[Point], itr: int) -> list[list[Point]]:
 
     return list_listPoint
 
-arr = [(0, 0), (2, 2), (4, 0)] 
-arrNew = process(arr, 3)
-print(arrNew[1])
+def cleanListPoint(listPoint: list[list[Point]], itr: int) -> list[Point]:
+    ans: list[Point] = []
+    temp: list[list[Point]] = listPoint[itr-1]
+    for i in range(1, len(temp) - 1, 2):
+        temp[i] = findMiddlePoint(temp[i-1], temp[i+1])
 
+    garbage: list[Point] = []
+    if(itr >= 3): 
+        for i in range(0, len(listPoint)):
+            garbage.extend(listPoint[i])
+        garbage = list(set(garbage))
+        print(temp)
+        temp = [item for item in temp if item not in garbage]
+
+    ans.append(temp[0])
+    for i in range(1, len(temp)):
+        ans.append(temp[i]) 
+    ans.append(temp[len(temp) - 1])
+    return ans
+
+arr = [(0, 0), (2, 2), (4, 0)] 
+arrNew = process(arr, 2)
+# cleanArr = cleanListPoint(arrNew, )
+for elmt in arrNew:
+    print(elmt)
+
+x, y = zip(*arr)
+# x, y = zip(*cleanArr)
+for i in range(len(arrNew)): 
+    x, y = zip(*arrNew[i])
+    plt.plot(x, y, marker='o', linestyle='-', label = i + 1)
+
+plt.title('Modified Points on Cartesian Diagram')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.legend()
+plt.grid(True)
+plt.show()
