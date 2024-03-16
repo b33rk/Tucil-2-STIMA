@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 from bruteforce import *
 from dnc import *
 
@@ -184,7 +185,7 @@ class MainWindow(QMainWindow):
                 return line,
 
             # Create the animation
-            self.ani = FuncAnimation(fig, animate, frames=iterasi, init_func=init, interval = 1000, blit=True, repeat = False)
+            self.ani = FuncAnimation(self.figure, animate, frames=iterasi, init_func=init, interval = 1000, blit=True, repeat = False)
 
             self.canvas.draw()
             self.show_animation()
