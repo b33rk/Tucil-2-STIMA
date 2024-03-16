@@ -1,7 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/1185818338_1394511312_223132457.mp4'
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/624642324_2412618357_666618010.mp4'
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/624642324_247827954_666618010.mp4'
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/624642324_753169836_666618010.mp4'
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/624642324_1930392788_666618010.mp4'
-file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/MovingSquare/624642324_3890345977_343678719.mp4'
