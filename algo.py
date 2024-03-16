@@ -50,13 +50,17 @@ middlePoint12: tuple[float, float] = findMiddlePoint(point1, point2)
 
 
 pairOfPoint = [(1, 1), (3,1), (1, 2), (2,3)]
-pairOfPoint = [(1, 2), (3,1), (3, 3), (0,1)]
-# pairOfPoint = [(1, 1), (3,1), (1, 2), (2,3), (2,5), (9,0), (10,8), (7,3), (0,0), (4,5)]
+pairOfPoint = [(1, 2), (3,1), (3, 3)]
+# pairOfPoint = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
+# pairOfPoint = [(1, 1), (3,1), (1, 2), (2,3), (2,5), (9,0), (10,8), (7,3), (0,0), (4,5), (-1,-7)]
 
-ans: list[tuple[float, float]] = addListOfPoint(10, pairOfPoint, [], 10)
+ans: list[tuple[float, float]] = addListOfPoint(2, pairOfPoint, [], 2)
 # print(ans)
 x, y = zip(*ans)
 plt.plot(x, y, marker='o', linestyle='-', markersize=0.5) 
+# for i in range(10):
+#     x, y = zip(*addListOfPoint(i, pairOfPoint, [], i))
+#     plt.plot(x, y ,marker='o', linestyle='-', markersize=0.5, label = i + 1) 
 x, y = zip(*pairOfPoint)
 plt.plot(x, y, marker='o', linestyle='-', markersize=5) 
 plt.title('Plot of Lists of Points')
