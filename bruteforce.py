@@ -1,3 +1,6 @@
+import sys
+from PyQt5.QtWidgets import *
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
 Point = tuple[float, float] 
@@ -10,7 +13,6 @@ def bezierCurveNPoint(list_point: list[Point], smoother: float = 0.1) -> list[Po
         x: float = 0
         y: float = 0
         for k, (point_x, point_y) in enumerate(list_point): 
-            print([k, (point_x, point_y)])
             x += bezierPointCalc(point_x, n, k, t)
             y += bezierPointCalc(point_y, n, k, t)
         result.append((x, y)) 
@@ -42,7 +44,7 @@ def plotBezier(core_point: list[Point], curve_point: list[Point]):
     plt.grid(True)
     plt.show()
 
-list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10), (10, 10), (11, -50), (50, -100)]
-list_point1 = [(0, 0), (2, 2), (4, 0)]
-points = bezierCurveNPoint(list_point1, 0.5)
-plotBezier(list_point1, points)
+# list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10), (10, 10), (11, -50), (50, -100)]
+# list_point1 = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
+# points = bezierCurveNPoint(list_point1, 0.5)
+
