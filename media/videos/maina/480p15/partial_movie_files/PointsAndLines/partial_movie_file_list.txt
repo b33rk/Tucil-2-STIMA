@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/PointsAndLines/1185818338_864631687_3028816645.mp4'
+file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/PointsAndLines/624642324_271201806_2598218065.mp4'
+file 'file:D:/OneDrive - Institut Teknologi Bandung/Kuliah ITB/Semester 4/Stima/Tucil_13522101_13522119/media/videos/maina/480p15/partial_movie_files/PointsAndLines/624642324_3890345977_61914487.mp4'

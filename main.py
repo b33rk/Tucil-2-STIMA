@@ -120,9 +120,9 @@ class MainWindow(QMainWindow):
         input_bezier_text = self.input_bezier.text()
         input_t = self.input_t.text() 
         try: 
-            list_points: list[Point] = eval(input_bezier_text)
+            list_points: list[Points] = eval(input_bezier_text)
             t: float = eval(input_t)
-            result: list[Point]
+            result: list[Points]
             if(t <= 1 and t >= 0):
                 result = bezierCurveNPoint(list_points, t)
 
@@ -150,11 +150,11 @@ class MainWindow(QMainWindow):
         input_bezier_text = self.input_bezier.text()
         input_iterasi = self.input_iterasi.text() 
         try: 
-            list_points: list[Point] = eval(input_bezier_text)
+            list_points: list[Points] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
-            result: list[Point]
+            result: list[Points]
             if(iterasi >= 0):
-                result: list[Point] = addListOfPoint(True, iterasi, list_points)
+                result: list[Points] = addListOfPoint(True, iterasi, list_points)
 
             ax = self.figure.add_subplot(111)
             ax.clear()
