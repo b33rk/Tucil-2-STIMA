@@ -50,16 +50,16 @@ a : list[list[tuple[float, float]]] = []
 # ans: list[tuple[float, float]] = addListOfPoint(True, 7, pairOfPoint)
 # x, y = zip(*ans)
 # plt.plot(x, y, marker='o', linestyle='-', markersize=2)
-for i in range(1,5):
-    x, y = zip(*addListOfPoint(True, i, pairOfPoint))
-    plt.plot(x, y ,marker='o', linestyle='-', markersize=5, label = i + 1) 
-x, y = zip(*pairOfPoint)
-plt.plot(x, y, marker='o', linestyle='-', markersize=5) 
-plt.title('Plot of Lists of Points')
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
-plt.grid(True)
-plt.show()
+# for i in range(1,5):
+#     x, y = zip(*addListOfPoint(True, i, pairOfPoint))
+#     plt.plot(x, y ,marker='o', linestyle='-', markersize=5, label = i + 1) 
+# x, y = zip(*pairOfPoint)
+# plt.plot(x, y, marker='o', linestyle='-', markersize=5) 
+# plt.title('Plot of Lists of Points')
+# plt.xlabel('X-axis')
+# plt.ylabel('Y-axis')
+# plt.grid(True)
+# plt.show()
 
 # def DnC_Point(middlePoint:  list[list[tuple[float, float]]], Point1: tuple[float, float], Point2: tuple[float, float], tempPoint : list[list[tuple[float, float]]]):
 #     medList = [x[0] for x in middlePoint]
