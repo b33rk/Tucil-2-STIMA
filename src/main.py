@@ -126,21 +126,23 @@ class MainWindow(QMainWindow):
         self.input_bezier = QLineEdit()
         self.input_bezier.setPlaceholderText("Masukkan point sebagai tuple, contoh: (x1, y1), (x2, y2)")
 
-        # input t
+        # display input dan tombol sesuai jenis input yang dipilih
         if (self.isPoint):
+            # tombol pengubah jenis input
+            self.button_p = QPushButton("Input berupa nilai t")
+            self.button_p.clicked.connect(self.updateIsPoint)
+            self.button_p.clicked.connect(self.bruteforceUI)
+            # input p
             self.input_p = QLineEdit() 
             self.input_p.setPlaceholderText("Masukkan jumlah titik akhir (bilangan bulat positif)")
-            self.checkbox_p = QPushButton("Input berupa nilai t")
-            self.checkbox_p.clicked.connect(self.updateIsPoint)
-            self.checkbox_p.clicked.connect(self.bruteforceUI)
         else :
-            self.checkbox_p = QPushButton("Input berupa jumlah titik akhir")
-            self.checkbox_p.clicked.connect(self.updateIsPoint)
-            self.checkbox_p.clicked.connect(self.bruteforceUI)
+            # tombol pengubah jenis input
+            self.button_p = QPushButton("Input berupa jumlah titik akhir")
+            self.button_p.clicked.connect(self.updateIsPoint)
+            self.button_p.clicked.connect(self.bruteforceUI)
+            # input t
             self.input_t = QLineEdit() 
             self.input_t.setPlaceholderText("Masukkan nilai t antara 0 - 1")
-
-        #checkbox show all iteration 
 
         # button to process
         self.button = QPushButton("Enter") 
@@ -153,7 +155,7 @@ class MainWindow(QMainWindow):
         else:
             box.addWidget(self.input_t, 2)
         box.addWidget(self.button, 2)
-        box.addWidget(self.checkbox_p, 1)
+        box.addWidget(self.button_p, 1)
         self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
