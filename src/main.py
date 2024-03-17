@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ani = None
         self.setUI()
+        self.isPoint: bool = False
     
     def setUI(self):
         central_widget = QWidget()
@@ -90,7 +91,6 @@ class MainWindow(QMainWindow):
         box.addWidget(self.button, 2)
         box.addWidget(self.checkbox)
         self.layout.addLayout(box) 
-        self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
     
@@ -99,6 +99,7 @@ class MainWindow(QMainWindow):
             self.isAll = True 
         else: 
             self.isAll = False
+    
     
     def bruteforceUI(self): 
         # clear menu bar
@@ -126,33 +127,63 @@ class MainWindow(QMainWindow):
         self.input_bezier.setPlaceholderText("Masukkan point sebagai tuple, contoh: (x1, y1), (x2, y2)")
 
         # input t
-        self.input_t = QLineEdit() 
-        self.input_t.setPlaceholderText("Masukkan nilai t antara 0 - 1")
+        if (self.isPoint):
+            self.input_p = QLineEdit() 
+            self.input_p.setPlaceholderText("Masukkan jumlah titik akhir (bilangan bulat positif)")
+            self.checkbox_p = QPushButton("Input berupa nilai t")
+            self.checkbox_p.clicked.connect(self.updateIsPoint)
+            self.checkbox_p.clicked.connect(self.bruteforceUI)
+        else :
+            self.checkbox_p = QPushButton("Input berupa jumlah titik akhir")
+            self.checkbox_p.clicked.connect(self.updateIsPoint)
+            self.checkbox_p.clicked.connect(self.bruteforceUI)
+            self.input_t = QLineEdit() 
+            self.input_t.setPlaceholderText("Masukkan nilai t antara 0 - 1")
+
+        #checkbox show all iteration 
 
         # button to process
         self.button = QPushButton("Enter") 
         self.button.clicked.connect(self.plot_draw_bruteforce)
         self.layout.addWidget(self.input_bezier)
 
-
         box = QHBoxLayout()
-        box.addWidget(self.input_t, 1)
+        if (self.isPoint):
+            box.addWidget(self.input_p, 2)
+        else:
+            box.addWidget(self.input_t, 2)
         box.addWidget(self.button, 2)
+        box.addWidget(self.checkbox_p, 1)
         self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
+    
+    def updateIsPoint(self):
+        if (self.isPoint):
+            self.isPoint = False
+        else: 
+            self.isPoint = True
 
     def plot_draw_bruteforce(self): 
         input_bezier_text = self.input_bezier.text()
-        input_t = self.input_t.text() 
+        if (self.isPoint):
+            input_p = self.input_p.text()
+        else:
+            input_t = self.input_t.text() 
         try: 
             list_points: list[Point] = eval(input_bezier_text)
-            t: float = eval(input_t)
+            t : float
+            if (self.isPoint):
+                p: int = eval(input_p)
+            else:
+                t = eval(input_t)
             result: list[Point]
             start_time = time.time()
-            if(t <= 1 and t >= 0):
-                result = bezierCurveNPoint(list_points, t)
-
+            if (self.isPoint):
+                result = bezierCurveBruteForce_PointInput(list_points, p)
+            else:
+                if(t <= 1 and t >= 0):
+                    result = bezierCurveNPoint(list_points, t)
             end_time = time.time()
             execution_time = (end_time - start_time) * 1000
             ax = self.figure.add_subplot(111)
