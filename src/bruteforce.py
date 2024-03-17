@@ -30,7 +30,7 @@ def fact(n: int) -> int:
     return ans
 
 def bezierCurveBruteForce_PointInput(list_point: list[Point], result_point_count: int) -> list[Point]:
-    if (10 <= result_point_count <= 20):
+    if (0 <= result_point_count <= 20):
         result_point_count -= 0.5
     return bezierCurveNPoint(list_point, 1/result_point_count)
 
@@ -50,7 +50,7 @@ def plotBezier(core_point: list[Point], curve_point: list[Point]):
 list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10), (10, 10), (11, -50), (50, -100)]
 # list_point = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
 # start_time = time.time()
-points = bezierCurveBruteForce_PointInput(list_point, 19)
+points = bezierCurveBruteForce_PointInput(list_point, 11)
 # points = bezierCurveNPoint(list_point, 0.105)
 # print(len(points))
 # end_time = time.time()
