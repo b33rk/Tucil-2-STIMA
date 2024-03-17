@@ -80,6 +80,11 @@ class MainWindow(QMainWindow):
         self.checkbox = QCheckBox("Tampilkan semua iterasi")
         self.checkbox.stateChanged.connect(self.updateIsAll)
         
+        #checkbox show all iteration 
+        self.isAll: bool = False
+        self.checkbox = QCheckBox("Tampilkan semua iterasi")
+        self.checkbox.stateChanged.connect(self.updateIsAll)
+        
         # animate
         self.button_animate = QPushButton("Animate") 
         self.button_animate.clicked.connect(self.plot_animate_dnc)
@@ -90,7 +95,17 @@ class MainWindow(QMainWindow):
         box.addWidget(self.button, 2)
         box.addWidget(self.checkbox)
         self.layout.addLayout(box) 
+        box.addWidget(self.checkbox)
         self.layout.addLayout(box) 
+        self.layout.addLayout(box) 
+        self.time = QLabel("Execution time: ")
+        self.layout.addWidget(self.time)
+    
+    def updateIsAll(self, state): 
+        if state == 2: 
+            self.isAll = True 
+        else: 
+            self.isAll = False
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
     
@@ -135,10 +150,13 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.input_bezier)
 
 
+
         box = QHBoxLayout()
         box.addWidget(self.input_t, 1)
         box.addWidget(self.button, 2)
         self.layout.addLayout(box) 
+        self.time = QLabel("Execution time: ")
+        self.layout.addWidget(self.time)
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
 
@@ -150,9 +168,12 @@ class MainWindow(QMainWindow):
             t: float = eval(input_t)
             result: list[Point]
             start_time = time.time()
+            start_time = time.time()
             if(t <= 1 and t >= 0):
                 result = bezierCurveNPoint(list_points, t)
 
+            end_time = time.time()
+            execution_time = (end_time - start_time) * 1000
             end_time = time.time()
             execution_time = (end_time - start_time) * 1000
             ax = self.figure.add_subplot(111)
@@ -171,6 +192,7 @@ class MainWindow(QMainWindow):
             ax.grid(True)
 
             self.canvas.draw()
+            self.time.setText(f"execution time: {execution_time} miliseconds")
             self.time.setText(f"execution time: {execution_time} miliseconds")
             ax.remove()
         except Exception as e:
