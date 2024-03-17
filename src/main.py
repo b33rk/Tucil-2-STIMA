@@ -157,8 +157,6 @@ class MainWindow(QMainWindow):
         self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
-        self.time = QLabel("Execution time: ")
-        self.layout.addWidget(self.time)
 
     def plot_draw_bruteforce(self): 
         input_bezier_text = self.input_bezier.text()
@@ -192,7 +190,6 @@ class MainWindow(QMainWindow):
             ax.grid(True)
 
             self.canvas.draw()
-            self.time.setText(f"execution time: {execution_time} miliseconds")
             self.time.setText(f"execution time: {execution_time} miliseconds")
             ax.remove()
         except Exception as e:
