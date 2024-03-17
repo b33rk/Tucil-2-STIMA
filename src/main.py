@@ -188,27 +188,8 @@ class MainWindow(QMainWindow):
             self.ani = FuncAnimation(self.figure, animate, frames=iterasi, init_func=init, interval = 1000, blit=True, repeat = False)
 
             self.canvas.draw()
-            self.show_animation()
         except Exception as e:
             print("Error:", e)
-
-    def show_animation(self):
-        # Create a new dialog to display the animation
-        dialog = QDialog()
-        dialog.setWindowTitle("Animation")
-        layout = QVBoxLayout(dialog)
-        
-        # Embed the canvas in the dialog
-        canvas = FigureCanvas(self.figure)
-        layout.addWidget(canvas)
-        
-        # Add a button to close the dialog
-        button_close = QPushButton("Close")
-        button_close.clicked.connect(dialog.close)
-        layout.addWidget(button_close)
-        
-        # Show the dialog
-        dialog.exec_()
 
     def plot_draw_dnc(self): 
         input_bezier_text = self.input_bezier.text()
@@ -217,9 +198,12 @@ class MainWindow(QMainWindow):
             list_points: list[Point] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
             result: list[Point]
-            ax = self.figure.add_subplot(111)
-            ax.clear()
+            
+            self.ani = None
+            self.figure.clear()
 
+            ax = self.figure.add_subplot(111)
+            ax.grid(True)
             x_core, y_core = zip(*list_points)
             ax.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
             for i in range(1,iterasi+1):
