@@ -75,6 +75,11 @@ class MainWindow(QMainWindow):
         self.button.clicked.connect(self.plot_draw_dnc)
         self.layout.addWidget(self.input_bezier)
 
+        #checkbox show all iteration 
+        self.isAll: bool = False
+        self.checkbox = QCheckBox("Tampilkan semua iterasi")
+        self.checkbox.stateChanged.connect(self.updateIsAll)
+        
         # animate
         self.button_animate = QPushButton("Animate") 
         self.button_animate.clicked.connect(self.plot_animate_dnc)
@@ -83,7 +88,17 @@ class MainWindow(QMainWindow):
         box = QHBoxLayout()
         box.addWidget(self.input_iterasi, 1)
         box.addWidget(self.button, 2)
+        box.addWidget(self.checkbox)
         self.layout.addLayout(box) 
+        self.layout.addLayout(box) 
+        self.time = QLabel("Execution time: ")
+        self.layout.addWidget(self.time)
+    
+    def updateIsAll(self, state): 
+        if state == 2: 
+            self.isAll = True 
+        else: 
+            self.isAll = False
     
     def bruteforceUI(self): 
         # clear menu bar
@@ -117,13 +132,15 @@ class MainWindow(QMainWindow):
         # button to process
         self.button = QPushButton("Enter") 
         self.button.clicked.connect(self.plot_draw_bruteforce)
-        self.button.clicked.connect(self.plot_draw_bruteforce)
         self.layout.addWidget(self.input_bezier)
+
 
         box = QHBoxLayout()
         box.addWidget(self.input_t, 1)
         box.addWidget(self.button, 2)
         self.layout.addLayout(box) 
+        self.time = QLabel("Execution time: ")
+        self.layout.addWidget(self.time)
 
     def plot_draw_bruteforce(self): 
         input_bezier_text = self.input_bezier.text()
@@ -132,9 +149,12 @@ class MainWindow(QMainWindow):
             list_points: list[Point] = eval(input_bezier_text)
             t: float = eval(input_t)
             result: list[Point]
+            start_time = time.time()
             if(t <= 1 and t >= 0):
                 result = bezierCurveNPoint(list_points, t)
 
+            end_time = time.time()
+            execution_time = (end_time - start_time) * 1000
             ax = self.figure.add_subplot(111)
             ax.clear()
 
@@ -151,6 +171,7 @@ class MainWindow(QMainWindow):
             ax.grid(True)
 
             self.canvas.draw()
+            self.time.setText(f"execution time: {execution_time} miliseconds")
             ax.remove()
         except Exception as e:
             print("Error:", e)
@@ -222,10 +243,26 @@ class MainWindow(QMainWindow):
 
             x_core, y_core = zip(*list_points)
             ax.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
-            for i in range(1,iterasi+1):
-                result: list[Point] = addListOfPoint(True, i, list_points)
+            if(self.isAll == True):
+                for i in range(1,iterasi+1):
+                    if(i == iterasi): 
+                        start_time = time.time()
+                        result: list[Point] = addListOfPoint(True, i, list_points)
+                        end_time = time.time()
+                        execution_time = (end_time-start_time)*1000
+                        self.time.setText(f"execution time: {execution_time} miliseconds") 
+                    else:
+                        result: list[Point] = addListOfPoint(True, i, list_points)
+                    x_curve, y_curve = zip(*result)
+                    ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
+            else:
+                start_time = time.time()
+                result: list[Point] = addListOfPoint(True, iterasi, list_points) 
+                end_time = time.time()
+                execution_time = (end_time - start_time) * 1000
+                self.time.setText(f"execution time: {execution_time} miliseconds") 
                 x_curve, y_curve = zip(*result)
-                ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
+                ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Kurva Bezier')    
 
             ax.set_title('Bezier Curve on Divide and Conquer')
             ax.set_xlabel('X-axis')
