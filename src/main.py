@@ -206,7 +206,7 @@ class MainWindow(QMainWindow):
                 return line,
 
             # Create the animation
-            self.ani = FuncAnimation(self.figure, animate, frames=iterasi, init_func=init, interval = 1000, blit=True, repeat = False)
+            self.ani = FuncAnimation(self.figure, animate, frames=iterasi + 1, init_func=init, interval = 1000, blit=True, repeat = False)
 
             self.canvas.draw()
             self.show_animation()
