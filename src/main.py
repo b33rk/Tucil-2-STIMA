@@ -247,17 +247,17 @@ class MainWindow(QMainWindow):
                 for i in range(1,iterasi+1):
                     if(i == iterasi): 
                         start_time = time.time()
-                        result: list[Point] = addListOfPoint(True, i, list_points)
+                        result: list[Point] = DnC_bezier_curve(i, list_points)
                         end_time = time.time()
                         execution_time = (end_time-start_time)*1000
                         self.time.setText(f"execution time: {execution_time} miliseconds") 
                     else:
-                        result: list[Point] = addListOfPoint(True, i, list_points)
+                        result: list[Point] = DnC_bezier_curve(i, list_points)
                     x_curve, y_curve = zip(*result)
                     ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
             else:
                 start_time = time.time()
-                result: list[Point] = addListOfPoint(True, iterasi, list_points) 
+                result: list[Point] = DnC_bezier_curve(iterasi, list_points)
                 end_time = time.time()
                 execution_time = (end_time - start_time) * 1000
                 self.time.setText(f"execution time: {execution_time} miliseconds") 
