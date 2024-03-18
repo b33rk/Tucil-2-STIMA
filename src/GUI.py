@@ -342,6 +342,10 @@ class MainWindow(QMainWindow):
             self.initialize_plot("Bezier Curve on Bruteforce")
 
             x_core, y_core = zip(*list_points)
+            xrange = (max(x_core) - min(x_core))/6
+            yrange = (max(y_core) - min(y_core))/6
+            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
             x_curve, y_curve = zip(*result)
 
             self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
@@ -369,8 +373,13 @@ class MainWindow(QMainWindow):
             self.ani = None
             self.axes.clear()
             self.figure.clear()
-
             self.initialize_plot("Bezier Curve on Divide and Conquer")
+
+            x_core, y_core = zip(*list_points)
+            xrange = (max(x_core) - min(x_core))/6
+            yrange = (max(y_core) - min(y_core))/6
+            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
 
             line, = self.axes.plot([], [], marker='o', linestyle='-', markersize=5)
 
@@ -382,11 +391,13 @@ class MainWindow(QMainWindow):
                 points = DnC_bezier_curve(iterasi,list_points)
                 x, y = zip(*points)
                 line.set_data(x, y)
-                xrange = (max(x) - min(x))/6
-                yrange = (max(y) - min(y))/6
-                self.axes.set_xlim(min(x) - xrange, max(x) + xrange)
+                xrangeTemp = (max(x) - min(x))/6
+                yrangeTemp = (max(y) - min(y))/6
+                if (xrangeTemp < xrange):
+                    self.axes.set_xlim(min(x) - xrangeTemp, max(x) + xrangeTemp)
+                if (yrangeTemp < yrange):
+                    self.axes.set_ylim(min(y) - yrangeTemp, max(y) + yrangeTemp)
                 self.axes.set_label(f"Iterasi ke-{iterasi}")
-                self.axes.set_ylim(min(y) - yrange, max(y) + yrange)
                 return line,
 
             # Create the animation
@@ -410,6 +421,10 @@ class MainWindow(QMainWindow):
             self.initialize_plot("Bezier Curve on Divide and Conquer")
 
             x_core, y_core = zip(*list_points)
+            xrange = (max(x_core) - min(x_core))/6
+            yrange = (max(y_core) - min(y_core))/6
+            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
             self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
             if(self.isAll == True):
                 for i in range(1,iterasi+1):
