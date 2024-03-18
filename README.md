@@ -29,6 +29,8 @@ Algoritma Bruteforce menggunakan rumus bezier curve biasa sebagai penghitungan u
 ## Struktur Program 
 ```
 | README.md
+| run-app.bat
+| run-app.sh
 |-- doc 
 |   |
 |-- src
