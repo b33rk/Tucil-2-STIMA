@@ -208,7 +208,7 @@ class MainWindow(QMainWindow):
 
             self.canvas.draw()
             self.time.setText(f"execution time: {execution_time} miliseconds")
-            self.point.setText("Jumlah titik akhir: " + str(len(result)))
+            self.point.setText("jumlah titik akhir: " + str(len(result)))
             ax.remove()
         except Exception as e:
             print("Error:", e)
@@ -293,7 +293,7 @@ class MainWindow(QMainWindow):
             ax.legend()
             ax.grid(True)
 
-            self.point.setText("Jumlah titik akhir: " + str((2**iterasi)+1))
+            self.point.setText("jumlah titik akhir: " + str((2**iterasi)+1))
             self.canvas.draw()
             ax.remove()
         except Exception as e:
