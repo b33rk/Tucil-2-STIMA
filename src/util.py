@@ -7,9 +7,9 @@ def toIntRange(input_str: str, range1: int, range2: int) -> int:
             if range1 <= choice <= range2:
                 return choice
             else:
-                print("Input out of range. Please enter a valid choice.")
+                print(f"Input out of range. Masukkan sesuai range antara {range1} dan {range2}")
         except ValueError:
-            print("Invalid input. Please enter a valid number.")
+            print("Invalid input. Masukkan sebuah integer")
 
         input_str = input("Masukkan ulang input: ")
 
@@ -33,7 +33,6 @@ def toPoints(input_str: str) -> list[tuple[float, float]]:
 
         input_str = input("Masukkan input lagi: ")
 
-    print(ans)
     return ans
 
 def toInt(input_str: str) -> int: 
