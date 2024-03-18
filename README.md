@@ -89,5 +89,5 @@ python3 main.py
 ## Anggota
 |Nama           | NIM 
 |---------------|----------------| 
-| Abdullah Mubarok | 13522101 |
+| Abdullah Mubarak | 13522101 |
 | Indraswara Galih Jayanegara | 13522119|
