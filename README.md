@@ -104,11 +104,16 @@ python3 main.py
 
 ## Fitur Unik
 Pada program ini terdapat beberapa fitur unik:
+### Bruteforce dan Divide and Conquer
 1. <code>Toolbar</code>. Terdapat toolbar matplotlib di atas gambar plot yang bisa digunakan untuk mengatur ukuran dan hal-hal lain pada plot.
    Untuk petunjuk selengkapnya, silakan kunjungi (https://matplotlib.org/3.2.2/users/navigation_toolbar.html)
 2. <code>Checkbox klik plot</code>. Terdapat checkbox pada bagian kiri atas gambar plot, di bawah toolbar.
    Ketika dicentang, program bisa membaca masukan titik dari klik langsung ke gambar plot.
 3. <code>Clear all</code>. Berguna untuk menghapus seluruh masukan dan titik-titik di gambar plot.
+### Bruteforce
+1. <code>Input berupa jumlah titik akhir</code>. Tombol ini berfungsi untuk mengubah masukan menjadi jumlah titik akhir kurva.
+### Divide and Conquer
+1. <code>Tampilkan semua iterasi</code>. Checkbox ini berguna jika ingin menampilkan semua kurva iterasi dari 1 sampai iterasi masukan, termasuk titik kontrol.
 
 ## Anggota
 |Nama           | NIM 
