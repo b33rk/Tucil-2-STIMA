@@ -28,7 +28,12 @@ def fact(n: int) -> int:
     for i in range(1, n + 1):
         ans *= i
     return ans
-    
+
+def bezierCurveBruteForce_PointInput(list_point: list[Point], result_point_count: int) -> list[Point]:
+    if (0 <= result_point_count <= 20):
+        result_point_count -= 0.5
+    return bezierCurveNPoint(list_point, 1/result_point_count)
+
 def plotBezier(core_point: list[Point], curve_point: list[Point]):
     x_core, y_core = zip(*core_point)
     x_curve, y_curve = zip(*curve_point)
@@ -41,13 +46,3 @@ def plotBezier(core_point: list[Point], curve_point: list[Point]):
     plt.legend()
     plt.grid(True)
     plt.show()
-
-# list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10), (10, 10), (11, -50), (50, -100)]
-# list_point1 = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
-# start_time = time.time()
-# points = bezierCurveNPoint(list_point1, 0.00064)
-# end_time = time.time()
-# execution_time = end_time - start_time
-# print(len(points))
-# print("Execution time:", execution_time, "seconds")
-# plotBezier(list_point1, points)
