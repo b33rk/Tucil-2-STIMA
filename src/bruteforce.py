@@ -65,7 +65,6 @@ list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10),
 points = bezierCurveBruteForce_PointInput(list_point, 25)
 # points = bruteforceIterasi(list_point, 10)
 # points = bezierCurveNPoint(list_point, 0.105)
-print(len(points))
 # end_time = time.time()
 # execution_time = end_time - start_time
 # print(len(points))

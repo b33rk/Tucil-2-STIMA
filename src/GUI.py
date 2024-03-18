@@ -191,7 +191,6 @@ class MainWindow(QMainWindow):
         self.axes.grid(True)  # Enable grid
         self.axes.set_xlim(self.xlim)
         self.axes.set_ylim(self.ylim)
-        self.axes.set_autoscale_on(True)
         self.axes.set_title(plotTitle)
         self.axes.set_xlabel('X')  # Set label for x-axis
         self.axes.set_ylabel('Y')  # Set label for y-axis
@@ -243,7 +242,7 @@ class MainWindow(QMainWindow):
         self.canvas = FigureCanvas(self.figure)
         self.canvas.mpl_connect('button_press_event', self.onclick)
         self.initialize_plot("Bezier Curve on Bruteforce")
-        
+
         # Toolbar
         toolbar = NavigationToolbar(self.canvas, self)
 
