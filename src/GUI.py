@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         self.ani = None
         self.setUI()
         self.isPoint: bool = False
+        self.setFixedSize(900, 600)
     
     def setUI(self):
         central_widget = QWidget()
@@ -23,6 +24,7 @@ class MainWindow(QMainWindow):
 
         label = QLabel("Pilih Tipe Algoritma")
         label.setAlignment(Qt.AlignCenter)
+        label.setFixedSize(self.width(), 50)
         vertical_box.addWidget(label)
 
         font = QFont()
