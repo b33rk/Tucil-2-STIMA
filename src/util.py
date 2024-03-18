@@ -33,7 +33,6 @@ def toPoints(input_str: str) -> list[tuple[float, float]]:
 
         input_str = input("Masukkan input lagi: ")
 
-    print(ans)
     return ans
 
 def toInt(input_str: str) -> int: 
