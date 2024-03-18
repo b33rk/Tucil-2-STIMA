@@ -21,6 +21,7 @@ Bezier Curve adalah kurva matematika yang didefinisikan oleh serangkaian titik k
 Projek ini membuat suatu algoritma dengan pendekatan Divide and Conquer untuk menyelesaikan persoalan Bezier curve dan membuat pendekatan Brute force sebagai perbandingan untuk Divide and Conquer
 
 ## Algoritma yang digunakan 
+Terdapat dua algoritma yang digunakan: Divide and Conquer sebagai algoritma utama dan bruteforce sebagai algoritma pembanding.
 
 ## Struktur Program 
 ```
