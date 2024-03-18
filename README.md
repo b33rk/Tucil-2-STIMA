@@ -12,10 +12,9 @@
     - [Anggota](#anggota)
 
 ## Bezier Curve Divide and Conquer 
-Bezier curve adalah
+Dibuat oleh Abdullah Mubarak dan Indraswara Galih Jayanegara
 
 ## Deskripsi Permasalahan 
-Bezier Curve adalah
 Bezier Curve adalah kurva matematika yang didefinisikan oleh serangkaian titik kontrol yang menentukan jalannya. Metode ini sering digunakan dalam grafika komputer dan desain grafis untuk membuat kurva yang mulus dan tepat. Bezier Curve sering digunakan dalam pembuatan grafis komputer, animasi, dan desain otomotif untuk merepresentasikan bentuk dan jalur dengan presisi tinggi.
 
 Projek ini membuat suatu algoritma dengan pendekatan Divide and Conquer untuk menyelesaikan persoalan Bezier curve dan membuat pendekatan Brute force sebagai perbandingan untuk Divide and Conquer
@@ -39,15 +38,53 @@ Terdapat dua algoritma yang digunakan: Divide and Conquer sebagai algoritma utam
 
 ## Requirements Program 
 install terlebih dahulu requirements yang diperlukan
+
+pada Windows install
 ```
 pip install PyQt5
 ```
+```
+pip install matplotlib
+```
+
+Pada WSL Install
+```
+sudo apt install python3-matplotlib
+```
+```
+sudo apt install python3-pyqt5
+```
 
 ## Menjalankan Program 
-Pindah ke directory src jalankan command
+pada windows 
+```
+.\run-app.bat
+```
+
+pada WSL jalankan perintah berikut 
+```
+.\run-app.sh
+```
+jika pada WSL tidak bisa jalankan perintah berikut sebelum menjalankan perintah diatas
+```
+chmod +x run-app.sh
+```
+
+### Alternatif 
+jika kedua perintah untuk menjalankan program tidak bisa maka jalankan perintah berikut 
+
+
+untuk windows: pindah ke folder src
 ```
 python main.py
 ```
+
+untuk WSL: pindah ke folder src
+```
+python3 main.py
+```
+
+
 
 ## Anggota
 |Nama           | NIM 
