@@ -29,10 +29,22 @@ def fact(n: int) -> int:
         ans *= i
     return ans
 
+def bruteforceIterasi(list_point: list[Point], iterasi: int):
+    temp_list = list(set(list_point))
+    if (len(temp_list) < 3):
+        return []
+    else :
+        point_count = pow(2, iterasi) + 1
+        return bezierCurveBruteForce_PointInput(list_point, point_count)
+
 def bezierCurveBruteForce_PointInput(list_point: list[Point], result_point_count: int) -> list[Point]:
-    if (0 <= result_point_count <= 20):
-        result_point_count -= 0.5
-    return bezierCurveNPoint(list_point, 1/result_point_count)
+    t : int = 1/result_point_count
+    if (1 % t != 0):
+        result_point_count -= 1
+    if (1 % t == 0 and t <= 20):
+        result_point_count -= 1
+    t = 1/result_point_count
+    return bezierCurveNPoint(list_point, t)
 
 def plotBezier(core_point: list[Point], curve_point: list[Point]):
     x_core, y_core = zip(*core_point)
@@ -46,3 +58,15 @@ def plotBezier(core_point: list[Point], curve_point: list[Point]):
     plt.legend()
     plt.grid(True)
     plt.show()
+
+list_point = [(0, 0), (2, 2), (4, 0), (3, 4), (5, 6), (6,-5), (7, 10), (8, -10), (10, 10), (11, -50), (50, -100)]
+# list_point = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
+# start_time = time.time()
+points = bezierCurveBruteForce_PointInput(list_point, 25)
+# points = bruteforceIterasi(list_point, 10)
+# points = bezierCurveNPoint(list_point, 0.105)
+# end_time = time.time()
+# execution_time = end_time - start_time
+# print(len(points))
+# print("Execution time:", execution_time, "seconds")
+# plotBezier(list_point1, points)
