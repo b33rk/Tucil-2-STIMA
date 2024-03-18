@@ -1,7 +1,6 @@
 from GUI import *
 from CLI import * 
 from util import * 
-import sys
 from PyQt5.QtWidgets import QApplication
 
 

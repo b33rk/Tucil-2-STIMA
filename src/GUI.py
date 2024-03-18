@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         ax.grid(True)
         ax.set_title('Bezier Curve')
 
-        line, = ax.plot([], [], marker='o', linestyle='-', markersize=5)
+        line, = ax.plot([], [], marker='o', linestyle='-', markersize=5, color = 'red')
 
         def init():
             line.set_data([], [])
