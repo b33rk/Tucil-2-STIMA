@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         self.button_dnc.setFixedHeight(50)
         self.button_dnc.clicked.connect(self.DNCUI)
 
-        vertical_box.addLayout(self.canvas)
+        vertical_box.addWidget(self.canvas)
         self.animateMainUI()
         vertical_box.addWidget(self.button_bruteforce)
         vertical_box.addWidget(self.button_dnc)
@@ -80,6 +80,7 @@ class MainWindow(QMainWindow):
             self.ani.event_source = None
 
     def DNCUI(self): 
+        self.stopAnimation()
         self.menuBar().clear()
         self.setWindowTitle("Divide And Conquer Bezier")
     
@@ -92,7 +93,7 @@ class MainWindow(QMainWindow):
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
         self.layout.addWidget(self.button_back)
-        self.button_back.setFixedSize(30, 20)
+        self.button_back.setFixedSize(40, 20)
 
         # figure to show plt
         self.figure = plt.figure()
@@ -139,6 +140,7 @@ class MainWindow(QMainWindow):
     
     def bruteforceUI(self): 
         # clear menu bar
+        self.stopAnimation()
         self.menuBar().clear()
         self.setWindowTitle("Bruteforce Bezier")
 
@@ -151,7 +153,7 @@ class MainWindow(QMainWindow):
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
         self.layout.addWidget(self.button_back)
-        self.button_back.setFixedSize(30, 20)
+        self.button_back.setFixedSize(40, 20)
 
         # setup plot figure
         self.figure = plt.figure()
@@ -330,9 +332,14 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print("Error:", e)
 
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
-
-if __name__ == "__main__":
+def DisplayGUI():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.resize(800, 600)
