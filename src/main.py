@@ -1,10 +1,21 @@
-from GUI import MainWindow
-import sys
+from GUI import *
+from CLI import * 
+from util import * 
 from PyQt5.QtWidgets import QApplication
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.resize(800, 600)
-    window.show()
-    sys.exit(app.exec_())
+
+def main(): 
+    while(True): 
+        print("Silahkan memilih tipe tampilan")
+        print("1. CLI")
+        print("2. GUI")
+        print("3. Exit")
+        choice = toIntRange(input(), 1, 3)
+        if(choice == 1): 
+            CLI()
+        elif(choice == 2): 
+            DisplayGUI()
+        else: quit()
+
+
+main()

@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
         self.ani = None
         self.setUI()
         self.isPoint: bool = False
+        self.setFixedSize(900, 600)
         self.cid = None
         self.list_point : list[Point] = []
     
@@ -36,12 +37,15 @@ class MainWindow(QMainWindow):
 
         label = QLabel("Pilih Tipe Algoritma")
         label.setAlignment(Qt.AlignCenter)
+        label.setFixedSize(self.width(), 50)
         vertical_box.addWidget(label)
 
         font = QFont()
         font.setPointSize(20) 
         label.setFont(font)
 
+        self.figure = plt.figure()
+        self.canvas = FigureCanvas(self.figure)
 
         self.button_bruteforce = QPushButton("BruteForce")
         self.button_bruteforce.setFixedHeight(50)
@@ -50,15 +54,52 @@ class MainWindow(QMainWindow):
         self.button_dnc.setFixedHeight(50)
         self.button_dnc.clicked.connect(self.DNCUI)
 
-        vertical_box.addStretch(0)
+        vertical_box.addWidget(self.canvas)
+        self.animateMainUI()
         vertical_box.addWidget(self.button_bruteforce)
         vertical_box.addWidget(self.button_dnc)
         # self.setLayout(vertical_box)
+
+    def animateMainUI(self): 
+        list_points: list[Point] = (6,-6),(3,-2),(-1, 3), (-2, 6), (0, 10), (3, 10), (5, 6) ,(5.5, 3), (6, -6), (6.5, 3), (7, 6) ,(9, 10), (12, 10), (14, 6), (13, 3), (9, -2), (6, -6)
+        iterasi: float = 10
+
+        self.ani = None
+        self.figure.clear()
+
+        ax = self.figure.add_subplot(111)
+        ax.grid(True)
+        ax.set_title('Bezier Curve')
+
+        line, = ax.plot([], [], marker='o', linestyle='-', markersize=5, color = 'red')
+
+        def init():
+            line.set_data([], [])
+            return line,
+
+        def animate(iterasi):
+            points = DnC_bezier_curve(iterasi,list_points)
+            x, y = zip(*points)
+            line.set_data(x, y)
+            ax.set_xlim(min(x) - 1, max(x) + 1)
+            ax.set_ylim(min(y) - 1, max(y) + 1)
+            return line,
+
+        # Create the animation
+        self.ani = FuncAnimation(self.figure, animate, frames=iterasi + 1, init_func=init, interval = 500, blit=True)
+
+        self.canvas.draw() 
+    
+    def stopAnimation(self):
+        if self.ani is not None:
+            self.ani.event_source = None
+
         
     def clear_points(self):
         self.list_point = []
 
     def DNCUI(self): 
+        self.stopAnimation()
         self.menuBar().clear()
         self.setWindowTitle("Divide And Conquer Bezier")
     
@@ -70,7 +111,7 @@ class MainWindow(QMainWindow):
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
         self.button_back.setFixedSize(40, 20)
-
+        self.button_back.setFixedSize(40, 20)
 
         # figure to show plt
         self.figure = plt.figure()
@@ -150,6 +191,7 @@ class MainWindow(QMainWindow):
 
     def bruteforceUI(self): 
         # clear menu bar
+        self.stopAnimation()
         self.menuBar().clear()
         self.setWindowTitle("Bruteforce Bezier")
 
@@ -338,9 +380,16 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print("Error:", e)
 
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     window = MainWindow()
-#     window.resize(800, 600)
-#     window.show()
-#     sys.exit(app.exec_())
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+def DisplayGUI():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.resize(800, 600)
+    window.show()
+    sys.exit(app.exec_())
