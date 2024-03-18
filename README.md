@@ -90,12 +90,12 @@ python3 main.py
 ## How to Use
 1. Jalankan Program.
 2. Pilih algoritma sesuai keinginan.
-Bruteforce :
+# Bruteforce
 1. Pilih tipe masukan yang diinginkan (iterasi atau jumlah titik akhir).
 2. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
 3. Masukkan iterasi atau jumlah titik akhir.
 4. Klik <code>enter</code> untuk menampilkan diagram kurva.
-Divide and Conquer :
+# Divide and Conquer
 1. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
 2. Masukkan jumlah iterasi.
 3. Isi checkbox di samping tombol enter jika ingin menampilkan juga kurva-kurva iterasi sebelumnya.
