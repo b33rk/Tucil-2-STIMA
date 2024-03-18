@@ -12,10 +12,9 @@
     - [Anggota](#anggota)
 
 ## Bezier Curve Divide and Conquer 
-Bezier curve adalah
+Dibuat oleh Abdullah Mubarak dan Indraswara Galih Jayanegara
 
 ## Deskripsi Permasalahan 
-Bezier Curve adalah
 Bezier Curve adalah kurva matematika yang didefinisikan oleh serangkaian titik kontrol yang menentukan jalannya. Metode ini sering digunakan dalam grafika komputer dan desain grafis untuk membuat kurva yang mulus dan tepat. Bezier Curve sering digunakan dalam pembuatan grafis komputer, animasi, dan desain otomotif untuk merepresentasikan bentuk dan jalur dengan presisi tinggi.
 
 Projek ini membuat suatu algoritma dengan pendekatan Divide and Conquer untuk menyelesaikan persoalan Bezier curve dan membuat pendekatan Brute force sebagai perbandingan untuk Divide and Conquer
