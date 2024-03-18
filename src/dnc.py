@@ -53,9 +53,9 @@ pairOfPoint = [(2, 0), (0,2), (5, 2), (7,0), (10, 10)]
 # print("Execution time:", execution_time, "seconds")
 # x, y = zip(*ans)
 # plt.plot(x, y, marker='o', linestyle='-', markersize=2)
-# # for i in range(1,5):
-# #     x, y = zip(*addListOfPoint(True, i, pairOfPoint))
-# #     plt.plot(x, y ,marker='o', linestyle='-', markersize=5, label = i + 1) 
+# for i in range(1,5):
+#     x, y = zip(*addListOfPoint(True, i, pairOfPoint))
+#     plt.plot(x, y ,marker='o', linestyle='-', markersize=5, label = i + 1) 
 # x, y = zip(*pairOfPoint)
 # plt.plot(x, y, marker='o', linestyle='-', markersize=5) 
 # plt.title('Plot of Lists of Points')

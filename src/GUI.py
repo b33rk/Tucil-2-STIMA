@@ -55,7 +55,7 @@ class MainWindow(QMainWindow):
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
         self.layout.addWidget(self.button_back)
-        self.button_back.setFixedSize(30, 20)
+        self.button_back.setFixedSize(40, 20)
 
         # figure to show plt
         self.figure = plt.figure()
@@ -92,6 +92,8 @@ class MainWindow(QMainWindow):
         self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
+        self.point = QLabel("Jumlah titik akhir: ")
+        self.layout.addWidget(self.point)
     
     def updateIsAll(self, state): 
         if state == 2: 
@@ -114,7 +116,7 @@ class MainWindow(QMainWindow):
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
         self.layout.addWidget(self.button_back)
-        self.button_back.setFixedSize(30, 20)
+        self.button_back.setFixedSize(40, 20)
 
         # setup plot figure
         self.figure = plt.figure()
@@ -158,6 +160,8 @@ class MainWindow(QMainWindow):
         self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
         self.layout.addWidget(self.time)
+        self.point = QLabel("Jumlah titik akhir: ")
+        self.layout.addWidget(self.point)
     
     def updateIsPoint(self):
         if (self.isPoint):
@@ -204,6 +208,7 @@ class MainWindow(QMainWindow):
 
             self.canvas.draw()
             self.time.setText(f"execution time: {execution_time} miliseconds")
+            self.point.setText("Jumlah titik akhir: " + str(len(result)))
             ax.remove()
         except Exception as e:
             print("Error:", e)
@@ -288,16 +293,15 @@ class MainWindow(QMainWindow):
             ax.legend()
             ax.grid(True)
 
+            self.point.setText("Jumlah titik akhir: " + str((2**iterasi)+1))
             self.canvas.draw()
             ax.remove()
         except Exception as e:
             print("Error:", e)
 
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.resize(800, 600)
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     window = MainWindow()
+#     window.resize(800, 600)
+#     window.show()
+#     sys.exit(app.exec_())
