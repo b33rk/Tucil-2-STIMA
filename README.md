@@ -88,27 +88,27 @@ python3 main.py
 ```
 
 ## How to Use
-1. Jalankan Program
-2. Pilih algoritma sesuai keinginan
+1. Jalankan Program.
+2. Pilih algoritma sesuai keinginan.
 Bruteforce :
-1. Pilih tipe masukan yang diinginkan (iterasi atau jumlah titik akhir)
-2. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program
-3. Masukkan iterasi atau jumlah titik akhir
-4. Klik enter untuk menampilkan diagram kurva
+1. Pilih tipe masukan yang diinginkan (iterasi atau jumlah titik akhir).
+2. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
+3. Masukkan iterasi atau jumlah titik akhir.
+4. Klik <code>enter</code> untuk menampilkan diagram kurva.
 Divide and Conquer :
-1. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program
-2. Masukkan jumlah iterasi
-3. Isi checkbox di samping tombol enter jika ingin menampilkan juga kurva-kurva iterasi sebelumnya
-4. Klik enter untuk menampilkan diagram kurva
-5. Klik animate untuk menampilkan animasi pembentukan kurva dari titik kontrol hingga iterasi masukan.
+1. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
+2. Masukkan jumlah iterasi.
+3. Isi checkbox di samping tombol enter jika ingin menampilkan juga kurva-kurva iterasi sebelumnya.
+4. Klik <code>enter</code> untuk menampilkan diagram kurva.
+5. Klik <code>animate</code> untuk menampilkan animasi pembentukan kurva dari titik kontrol hingga iterasi masukan.
 
 ## Fitur Unik
 Pada program ini terdapat beberapa fitur unik:
-1. Toolbar. Terdapat toolbar matplotlib di atas gambar plot yang bisa digunakan untuk mengatur ukuran dan hal-hal lain pada plot.
+1. <code>Toolbar</code>. Terdapat toolbar matplotlib di atas gambar plot yang bisa digunakan untuk mengatur ukuran dan hal-hal lain pada plot.
    Untuk petunjuk selengkapnya, silakan kunjungi (https://matplotlib.org/3.2.2/users/navigation_toolbar.html)
-2. Checkbox klik plot. Terdapat checkbox pada bagian kiri atas gambar plot, di bawah toolbar.
+2. <code>Checkbox klik plot</code>. Terdapat checkbox pada bagian kiri atas gambar plot, di bawah toolbar.
    Ketika dicentang, program bisa membaca masukan titik dari klik langsung ke gambar plot.
-3. Clear all. Berguna untuk menghapus seluruh masukan dan titik-titik di gambar plot.
+3. <code>Clear all</code>. Berguna untuk menghapus seluruh masukan dan titik-titik di gambar plot.
 
 ## Anggota
 |Nama           | NIM 
