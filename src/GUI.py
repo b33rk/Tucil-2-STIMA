@@ -4,10 +4,20 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from bruteforce import *
 from dnc import *
+
+class MplCanvas(FigureCanvas):
+
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super(MplCanvas, self).__init__(fig)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -15,8 +25,11 @@ class MainWindow(QMainWindow):
         self.ani = None
         self.setUI()
         self.isPoint: bool = False
+        self.cid = None
+        self.list_point : list[Point] = []
     
     def setUI(self):
+        self.clear_points()
         central_widget = QWidget()
         self.setCentralWidget(central_widget) 
         vertical_box = QVBoxLayout(central_widget)
@@ -42,6 +55,9 @@ class MainWindow(QMainWindow):
         vertical_box.addWidget(self.button_dnc)
         # self.setLayout(vertical_box)
         
+    def clear_points(self):
+        self.list_point = []
+
     def DNCUI(self): 
         self.menuBar().clear()
         self.setWindowTitle("Divide And Conquer Bezier")
@@ -49,18 +65,21 @@ class MainWindow(QMainWindow):
         # setup window
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget) 
-        self.layout = QVBoxLayout(self.central_widget) 
 
         # back button
         self.button_back = QPushButton("Back")
         self.button_back.clicked.connect(self.setUI)
-        self.layout.addWidget(self.button_back)
         self.button_back.setFixedSize(40, 20)
+
 
         # figure to show plt
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
-        self.layout.addWidget(self.canvas)
+        self.canvas.mpl_connect('button_press_event', self.onclick)
+        self.initialize_plot()
+
+        # toolbar
+        toolbar = NavigationToolbar(self.canvas, self)
 
         # input point 
         self.input_bezier = QLineEdit()
@@ -73,7 +92,6 @@ class MainWindow(QMainWindow):
         # process
         self.button = QPushButton("Enter") 
         self.button.clicked.connect(self.plot_draw_dnc)
-        self.layout.addWidget(self.input_bezier)
 
         #checkbox show all iteration 
         self.isAll: bool = False
@@ -83,25 +101,53 @@ class MainWindow(QMainWindow):
         # animate
         self.button_animate = QPushButton("Animate") 
         self.button_animate.clicked.connect(self.plot_animate_dnc)
-        self.layout.addWidget(self.button_animate)
 
-        box = QHBoxLayout()
-        box.addWidget(self.input_iterasi, 1)
-        box.addWidget(self.button, 2)
-        box.addWidget(self.checkbox)
-        self.layout.addLayout(box) 
         self.time = QLabel("Execution time: ")
-        self.layout.addWidget(self.time)
         self.point = QLabel("Jumlah titik akhir: ")
+
+        self.layout = QVBoxLayout(self.central_widget) 
+        self.layout.addWidget(self.button_back)
+        self.layout.addWidget(toolbar)
+        self.layout.addWidget(self.canvas)
+        self.layout.addWidget(self.input_bezier)
+        self.layout.addWidget(self.button_animate)
+        self.intialize_box_dnc()
+        self.layout.addLayout(self.box) 
+        self.layout.addWidget(self.time)
         self.layout.addWidget(self.point)
+
+    def intialize_box_dnc(self):
+        self.box = QHBoxLayout()
+        self.box.addWidget(self.input_iterasi, 1)
+        self.box.addWidget(self.button, 2)
+        self.box.addWidget(self.checkbox)
     
+    def initialize_plot(self):
+        # Customize the appearance of axes and grid
+        self.axes = self.figure.add_subplot(111)
+        self.axes.grid(True)  # Enable grid
+        self.axes.set_xlim(0,10)
+        self.axes.set_ylim(0,10)
+        self.axes.set_autoscale_on(True)
+        self.axes.set_title('Bezier Curve on Divide and Conquer')
+        self.axes.set_xlabel('X')  # Set label for x-axis
+        self.axes.set_ylabel('Y')  # Set label for y-axis
+
     def updateIsAll(self, state): 
         if state == 2: 
             self.isAll = True 
         else: 
             self.isAll = False
     
-    
+    def onclick(self, event):
+        self.list_point.append([event.xdata, event.ydata])
+        if len(self.input_bezier.text()) != 0 :
+            self.input_bezier.insert(", ")
+        self.input_bezier.insert(f"({event.xdata}, {event.ydata})")
+        x, y = zip(*self.list_point)
+        self.axes.plot(x, y, marker='o', linestyle='-')
+        self.canvas.draw()
+
     def bruteforceUI(self): 
         # clear menu bar
         self.menuBar().clear()
@@ -130,7 +176,7 @@ class MainWindow(QMainWindow):
         # display input dan tombol sesuai jenis input yang dipilih
         if (self.isPoint):
             # tombol pengubah jenis input
-            self.button_p = QPushButton("Input berupa nilai t")
+            self.button_p = QPushButton("Input berupa iterasi")
             self.button_p.clicked.connect(self.updateIsPoint)
             self.button_p.clicked.connect(self.bruteforceUI)
             # input p
@@ -143,7 +189,7 @@ class MainWindow(QMainWindow):
             self.button_p.clicked.connect(self.bruteforceUI)
             # input t
             self.input_t = QLineEdit() 
-            self.input_t.setPlaceholderText("Masukkan nilai t antara 0 - 1")
+            self.input_t.setPlaceholderText("Masukkan iterasi (bilangan bulat positif)")
 
         # button to process
         self.button = QPushButton("Enter") 
@@ -185,10 +231,11 @@ class MainWindow(QMainWindow):
             result: list[Point]
             start_time = time.time()
             if (self.isPoint):
-                result = bezierCurveBruteForce_PointInput(list_points, p)
+                if (p > 0):
+                    result = bezierCurveBruteForce_PointInput(list_points, p)
             else:
-                if(t <= 1 and t >= 0):
-                    result = bezierCurveNPoint(list_points, t)
+                if(t > 0):
+                    result = bruteforceIterasi(list_points, t)
             end_time = time.time()
             execution_time = (end_time - start_time) * 1000
             ax = self.figure.add_subplot(111)
@@ -221,15 +268,12 @@ class MainWindow(QMainWindow):
             iterasi: float = eval(input_iterasi)
 
             self.ani = None
+            self.axes.clear()
             self.figure.clear()
 
-            ax = self.figure.add_subplot(111)
-            ax.grid(True)
-            ax.set_title('Bezier Curve on Divide and Conquer')
-            ax.set_xlabel('X-axis')
-            ax.set_ylabel('Y-axis')
+            self.initialize_plot()
 
-            line, = ax.plot([], [], marker='o', linestyle='-', markersize=5)
+            line, = self.axes.plot([], [], marker='o', linestyle='-', markersize=5)
 
             def init():
                 line.set_data([], [])
@@ -239,8 +283,9 @@ class MainWindow(QMainWindow):
                 points = DnC_bezier_curve(iterasi,list_points)
                 x, y = zip(*points)
                 line.set_data(x, y)
-                ax.set_xlim(min(x) - 1, max(x) + 1)
-                ax.set_ylim(min(y) - 1, max(y) + 1)
+                self.axes.set_xlim(min(x) - 1, max(x) + 1)
+                self.axes.set_label(f"Iterasi ke-{iterasi}")
+                self.axes.set_ylim(min(y) - 1, max(y) + 1)
                 return line,
 
             # Create the animation
@@ -261,11 +306,10 @@ class MainWindow(QMainWindow):
             self.ani = None
             self.figure.clear()
 
-            ax = self.figure.add_subplot(111)
-            ax.grid(True)
+            self.initialize_plot()
 
             x_core, y_core = zip(*list_points)
-            ax.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
+            self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
             if(self.isAll == True):
                 for i in range(1,iterasi+1):
                     if(i == iterasi): 
@@ -277,7 +321,7 @@ class MainWindow(QMainWindow):
                     else:
                         result: list[Point] = DnC_bezier_curve(i, list_points)
                     x_curve, y_curve = zip(*result)
-                    ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
+                    self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
             else:
                 start_time = time.time()
                 result: list[Point] = DnC_bezier_curve(iterasi, list_points)
@@ -285,17 +329,12 @@ class MainWindow(QMainWindow):
                 execution_time = (end_time - start_time) * 1000
                 self.time.setText(f"execution time: {execution_time} miliseconds") 
                 x_curve, y_curve = zip(*result)
-                ax.plot(x_curve, y_curve, marker='o', linestyle='-', label='Kurva Bezier')    
+                self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Kurva Bezier')    
 
-            ax.set_title('Bezier Curve on Divide and Conquer')
-            ax.set_xlabel('X-axis')
-            ax.set_ylabel('Y-axis')
-            ax.legend()
-            ax.grid(True)
+            self.axes.legend()
 
             self.point.setText("jumlah titik akhir: " + str((2**iterasi)+1))
             self.canvas.draw()
-            ax.remove()
         except Exception as e:
             print("Error:", e)
 
