@@ -109,7 +109,6 @@ class MainWindow(QMainWindow):
         self.input_bezier.setText("")
 
     def DNCUI(self): 
-        self.ani = None
         self.isDcui: bool = True
         self.stopAnimation()
         self.menuBar().clear()
