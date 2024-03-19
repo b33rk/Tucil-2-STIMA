@@ -9,6 +9,8 @@
     - [Struktur Program](#struktur-program)
     - [Requirements Program](#requirements-program)
     - [Menjalankan Program](#menjalankan-program)
+    - [How to Use](#how-to-use)
+    - [Fitur Unik](#fitur-unik)
     - [Anggota](#anggota)
 
 ## Bezier Curve Divide and Conquer 
@@ -20,11 +22,15 @@ Bezier Curve adalah kurva matematika yang didefinisikan oleh serangkaian titik k
 Projek ini membuat suatu algoritma dengan pendekatan Divide and Conquer untuk menyelesaikan persoalan Bezier curve dan membuat pendekatan Brute force sebagai perbandingan untuk Divide and Conquer
 
 ## Algoritma yang digunakan 
-Terdapat dua algoritma yang digunakan: Divide and Conquer sebagai algoritma utama dan bruteforce sebagai algoritma pembanding.
+Terdapat dua algoritma yang digunakan: Divide and Conquer sebagai algoritma utama dan Bruteforce sebagai algoritma pembanding.
+Algoritma Divide and Conquer menghitung titik tengah antara dua titik sebagai penghitungan utama.
+Algoritma Bruteforce menggunakan rumus bezier curve biasa sebagai penghitungan utama.
 
 ## Struktur Program 
 ```
 | README.md
+| run-app.bat
+| run-app.sh
 |-- doc 
 |   |
 |-- src
@@ -71,8 +77,7 @@ chmod +x run-app.sh
 ```
 
 ### Alternatif 
-jika kedua perintah untuk menjalankan program tidak bisa maka jalankan perintah berikut 
-
+jika kedua perintah untuk menjalankan program tidak bisa maka jalankan perintah berikut: 
 
 untuk windows: pindah ke folder src
 ```
@@ -84,7 +89,33 @@ untuk WSL: pindah ke folder src
 python3 main.py
 ```
 
+## How to Use
+1. Jalankan Program.
+2. Pilih algoritma sesuai keinginan.
+### Bruteforce
+1. Pilih tipe masukan yang diinginkan (iterasi atau jumlah titik akhir).
+2. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
+3. Masukkan iterasi atau jumlah titik akhir.
+4. Klik <code>enter</code> untuk menampilkan diagram kurva.
+### Divide and Conquer
+1. Masukkan titik-titik kontrol yang diinginkan sesuai petunjuk program.
+2. Masukkan jumlah iterasi.
+3. Isi checkbox di samping tombol enter jika ingin menampilkan juga kurva-kurva iterasi sebelumnya.
+4. Klik <code>enter</code> untuk menampilkan diagram kurva.
+5. Klik <code>animate</code> untuk menampilkan animasi pembentukan kurva dari titik kontrol hingga iterasi masukan.
 
+## Fitur Unik
+Pada program ini terdapat beberapa fitur unik:
+### Bruteforce dan Divide and Conquer
+1. <code>Toolbar</code>. Terdapat toolbar matplotlib di atas gambar plot yang bisa digunakan untuk mengatur ukuran dan hal-hal lain pada plot.
+   Untuk petunjuk selengkapnya, silakan kunjungi (https://matplotlib.org/3.2.2/users/navigation_toolbar.html)
+2. <code>Checkbox klik plot</code>. Terdapat checkbox pada bagian kiri atas gambar plot, di bawah toolbar.
+   Ketika dicentang, program bisa membaca masukan titik dari klik langsung ke gambar plot.
+3. <code>Clear all</code>. Berguna untuk menghapus seluruh masukan dan titik-titik di gambar plot.
+### Bruteforce
+1. <code>Input berupa jumlah titik akhir</code>. Tombol ini berfungsi untuk mengubah masukan menjadi jumlah titik akhir kurva.
+### Divide and Conquer
+1. <code>Tampilkan semua iterasi</code>. Checkbox ini berguna jika ingin menampilkan semua kurva iterasi dari 1 sampai iterasi masukan, termasuk titik kontrol.
 
 ## Anggota
 |Nama           | NIM 
