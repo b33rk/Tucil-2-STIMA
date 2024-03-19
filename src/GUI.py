@@ -374,8 +374,6 @@ class MainWindow(QMainWindow):
             if (len(set(list_points)) >= 3):
 
                 # If animation is already running, stop it before starting a new one
-                if isinstance(self.ani, FuncAnimation):
-                    self.ani.event_source.stop()
                 self.ani = None
                 self.axes.clear()
                 self.figure.clear()
@@ -404,7 +402,6 @@ class MainWindow(QMainWindow):
                 self.ani = FuncAnimation(self.figure, animate, frames=iterasi + 1, init_func=init, interval = 1000, blit=True, repeat = False)
 
                 self.canvas.draw()
-                self.ani = None
         except Exception as e:
             print("Error:", e)
 
@@ -417,8 +414,6 @@ class MainWindow(QMainWindow):
             result: list[Point]
             if (len(set(list_points)) >= 3):
                 # If animation is already running, stop it before starting a new one
-                if isinstance(self.ani, FuncAnimation):
-                    self.ani.event_source.stop()
                 self.ani = None
                 self.figure.clear()
 
@@ -458,12 +453,12 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print("Error:", e)
 
-    def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+def closeEvent(self, event):
+    reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+    if reply == QMessageBox.Yes:
+        event.accept()
+    else:
+        event.ignore()
 
 def DisplayGUI():
     app = QApplication(sys.argv)
