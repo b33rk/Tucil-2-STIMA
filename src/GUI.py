@@ -323,44 +323,45 @@ class MainWindow(QMainWindow):
             list_points: list[Point] = eval(input_bezier_text)
             t : float
             result: list[Point]
+            if (len(set(list_points)) >= 3):
 
-            if (self.isPoint):
-                p: int = eval(input_p)
-            else:
-                t = eval(input_t)
-            
-            start_time = time.time()
-            if (self.isPoint):
-                if (p > 0):
-                    result = bezierCurveBruteForce_PointInput(list_points, p)
-            else:
-                if(t > 0):
-                    result = bruteforceIterasi(list_points, t)
-            end_time = time.time()
-            execution_time = (end_time - start_time) * 1000
-            
-            self.figure.clear()
-            self.initialize_plot("Bezier Curve on Bruteforce")
+                if (self.isPoint):
+                    p: int = eval(input_p)
+                else:
+                    t = eval(input_t)
+                
+                start_time = time.time()
+                if (self.isPoint):
+                    if (p > 0):
+                        result = bezierCurveBruteForce_PointInput(list_points, p)
+                else:
+                    if(t > 0):
+                        result = bruteforceIterasi(list_points, t)
+                end_time = time.time()
+                execution_time = (end_time - start_time) * 1000
+                
+                self.figure.clear()
+                self.initialize_plot("Bezier Curve on Bruteforce")
 
-            x_core, y_core = zip(*list_points)
-            xrange = (max(x_core) - min(x_core))/6
-            yrange = (max(y_core) - min(y_core))/6
-            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
-            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
-            x_curve, y_curve = zip(*result)
+                x_core, y_core = zip(*list_points)
+                xrange = (max(x_core) - min(x_core))/6
+                yrange = (max(y_core) - min(y_core))/6
+                self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+                self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
+                x_curve, y_curve = zip(*result)
 
-            self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
-            self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Bezier Curve')
+                self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
+                self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Bezier Curve')
 
-            self.axes.set_title('Bezier Curve on Brute force')
-            self.axes.set_xlabel('X-axis')
-            self.axes.set_ylabel('Y-axis')
-            self.axes.legend()
-            self.axes.grid(True)
+                self.axes.set_title('Bezier Curve on Brute force')
+                self.axes.set_xlabel('X-axis')
+                self.axes.set_ylabel('Y-axis')
+                self.axes.legend()
+                self.axes.grid(True)
 
-            self.canvas.draw()
-            self.time.setText(f"execution time: {execution_time} miliseconds")
-            self.point.setText("jumlah titik akhir: " + str(len(result)))
+                self.canvas.draw()
+                self.time.setText(f"execution time: {execution_time} miliseconds")
+                self.point.setText("jumlah titik akhir: " + str(len(result)))
         except Exception as e:
             print("Error:", e)
 
@@ -370,44 +371,40 @@ class MainWindow(QMainWindow):
         try:
             list_points: list[Point] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
+            if (len(set(list_points)) >= 3):
 
-            # If animation is already running, stop it before starting a new one
-            if self.ani is not None:
-                self.ani.event_source.stop()
+                # If animation is already running, stop it before starting a new one
+                if isinstance(self.ani, FuncAnimation):
+                    self.ani.event_source.stop()
                 self.ani = None
-            self.axes.clear()
-            self.figure.clear()
-            self.initialize_plot("Bezier Curve on Divide and Conquer")
+                self.axes.clear()
+                self.figure.clear()
+                self.initialize_plot("Bezier Curve on Divide and Conquer")
 
-            x_core, y_core = zip(*list_points)
-            xrange = (max(x_core) - min(x_core))/6
-            yrange = (max(y_core) - min(y_core))/6
-            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
-            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
+                x_core, y_core = zip(*list_points)
+                xrange = (max(x_core) - min(x_core))/6
+                yrange = (max(y_core) - min(y_core))/6
+                self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+                self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
 
-            line, = self.axes.plot([], [], marker='o', linestyle='-', markersize=5)
+                line, = self.axes.plot([], [], marker='o', linestyle='-', markersize=5)
 
-            def init():
-                line.set_data([], [])
-                return line,
+                def init():
+                    line.set_data([], [])
+                    return line,
 
-            def animate(iterasi):
-                points = DnC_bezier_curve(iterasi,list_points)
-                x, y = zip(*points)
-                line.set_data(x, y)
-                xrangeTemp = (max(x) - min(x))/6
-                yrangeTemp = (max(y) - min(y))/6
-                if (xrangeTemp < xrange):
-                    self.axes.set_xlim(min(x) - xrangeTemp, max(x) + xrangeTemp)
-                if (yrangeTemp < yrange):
-                    self.axes.set_ylim(min(y) - yrangeTemp, max(y) + yrangeTemp)
-                self.axes.set_label(f"Iterasi ke-{iterasi}")
-                return line,
+                def animate(iterasi):
+                    points = DnC_bezier_curve(iterasi,list_points)
+                    x, y = zip(*points)
+                    line.set_data(x, y)
+                    self.axes.set_label(f"Iterasi ke-{iterasi}")
+                    return line,
 
-            # Create the animation
-            self.ani = FuncAnimation(self.figure, animate, frames=iterasi + 1, init_func=init, interval = 1000, blit=True, repeat = False)
+                # Create the animation
+                self.ani = FuncAnimation(self.figure, animate, frames=iterasi + 1, init_func=init, interval = 1000, blit=True, repeat = False)
 
-            self.canvas.draw()
+                self.canvas.draw()
+                self.ani = None
         except Exception as e:
             print("Error:", e)
 
@@ -418,46 +415,46 @@ class MainWindow(QMainWindow):
             list_points: list[Point] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
             result: list[Point]
-
-            # If animation is already running, stop it before starting a new one
-            if self.ani is not None:
-                self.ani.event_source.stop()
+            if (len(set(list_points)) >= 3):
+                # If animation is already running, stop it before starting a new one
+                if isinstance(self.ani, FuncAnimation):
+                    self.ani.event_source.stop()
                 self.ani = None
-            self.figure.clear()
+                self.figure.clear()
 
-            self.initialize_plot("Bezier Curve on Divide and Conquer")
+                self.initialize_plot("Bezier Curve on Divide and Conquer")
 
-            x_core, y_core = zip(*list_points)
-            xrange = (max(x_core) - min(x_core))/6
-            yrange = (max(y_core) - min(y_core))/6
-            self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
-            self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
-            self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
-            if(self.isAll == True):
-                for i in range(1,iterasi+1):
-                    if(i == iterasi): 
-                        start_time = time.time()
-                        result: list[Point] = DnC_bezier_curve(i, list_points)
-                        end_time = time.time()
-                        execution_time = (end_time-start_time)*1000
-                        self.time.setText(f"execution time: {execution_time} miliseconds") 
-                    else:
-                        result: list[Point] = DnC_bezier_curve(i, list_points)
+                x_core, y_core = zip(*list_points)
+                xrange = (max(x_core) - min(x_core))/6
+                yrange = (max(y_core) - min(y_core))/6
+                self.axes.set_xlim(min(x_core) - xrange, max(x_core) + xrange)
+                self.axes.set_ylim(min(y_core) - yrange, max(y_core) + yrange)
+                self.axes.plot(x_core, y_core, marker='x', linestyle='-', label='Initial Point')
+                if(self.isAll == True):
+                    for i in range(1,iterasi+1):
+                        if(i == iterasi): 
+                            start_time = time.time()
+                            result: list[Point] = DnC_bezier_curve(i, list_points)
+                            end_time = time.time()
+                            execution_time = (end_time-start_time)*1000
+                            self.time.setText(f"execution time: {execution_time} miliseconds") 
+                        else:
+                            result: list[Point] = DnC_bezier_curve(i, list_points)
+                        x_curve, y_curve = zip(*result)
+                        self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
+                else:
+                    start_time = time.time()
+                    result: list[Point] = DnC_bezier_curve(iterasi, list_points)
+                    end_time = time.time()
+                    execution_time = (end_time - start_time) * 1000
+                    self.time.setText(f"execution time: {execution_time} miliseconds") 
                     x_curve, y_curve = zip(*result)
-                    self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Iterasi ke-' + str(i))    
-            else:
-                start_time = time.time()
-                result: list[Point] = DnC_bezier_curve(iterasi, list_points)
-                end_time = time.time()
-                execution_time = (end_time - start_time) * 1000
-                self.time.setText(f"execution time: {execution_time} miliseconds") 
-                x_curve, y_curve = zip(*result)
-                self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Kurva Bezier')    
+                    self.axes.plot(x_curve, y_curve, marker='o', linestyle='-', label='Kurva Bezier')    
 
-            self.axes.legend()
+                self.axes.legend()
 
-            self.point.setText("jumlah titik akhir: " + str((2**iterasi)+1))
-            self.canvas.draw()
+                self.point.setText("jumlah titik akhir: " + str((2**iterasi)+1))
+                self.canvas.draw()
         except Exception as e:
             print("Error:", e)
 
