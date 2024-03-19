@@ -20,9 +20,9 @@ def CLI():
 def Bruteforce(): 
     print("Masukkan titik")
     listTitik: list[tuple[float, float]] = toPoints(input())
-    print("Masukkan nilai t antara 0 sampai 1, contoh 0.01")
-    nilai_t: float = toFloat(input())
-    result_bezier: list[tuple[float, float]] = bezierCurveNPoint(listTitik, nilai_t)
+    print("Masukkan nilai iterasi contoh 2")
+    iterasi: float = toInt(input())
+    result_bezier: list[tuple[float, float]] = bruteforceIterasi(listTitik, iterasi)
     start_time = time.time()
     end_time = time.time()
     execution_time = (end_time - start_time) * 1000 
