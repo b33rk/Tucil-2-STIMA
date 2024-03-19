@@ -109,6 +109,7 @@ class MainWindow(QMainWindow):
         self.input_bezier.setText("")
 
     def DNCUI(self): 
+        self.ani = None
         self.isDcui: bool = True
         self.stopAnimation()
         self.menuBar().clear()
@@ -370,7 +371,10 @@ class MainWindow(QMainWindow):
             list_points: list[Point] = eval(input_bezier_text)
             iterasi: float = eval(input_iterasi)
 
-            self.ani = None
+            # If animation is already running, stop it before starting a new one
+            if self.ani is not None:
+                self.ani.event_source.stop()
+                self.ani = None
             self.axes.clear()
             self.figure.clear()
             self.initialize_plot("Bezier Curve on Divide and Conquer")
@@ -415,7 +419,10 @@ class MainWindow(QMainWindow):
             iterasi: float = eval(input_iterasi)
             result: list[Point]
 
-            self.ani = None
+            # If animation is already running, stop it before starting a new one
+            if self.ani is not None:
+                self.ani.event_source.stop()
+                self.ani = None
             self.figure.clear()
 
             self.initialize_plot("Bezier Curve on Divide and Conquer")
