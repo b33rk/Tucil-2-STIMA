@@ -453,12 +453,12 @@ class MainWindow(QMainWindow):
         except Exception as e:
             print("Error:", e)
 
-def closeEvent(self, event):
-    reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-    if reply == QMessageBox.Yes:
-        event.accept()
-    else:
-        event.ignore()
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Exit', 'Yakin Bro-ku?', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 def DisplayGUI():
     app = QApplication(sys.argv)
