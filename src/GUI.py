@@ -373,6 +373,7 @@ class MainWindow(QMainWindow):
             if (len(set(list_points)) >= 3):
 
                 # If animation is already running, stop it before starting a new one
+                self.stopAnimation()
                 self.ani = None
                 self.axes.clear()
                 self.figure.clear()
@@ -413,6 +414,7 @@ class MainWindow(QMainWindow):
             result: list[Point]
             if (len(set(list_points)) >= 3):
                 # If animation is already running, stop it before starting a new one
+                self.stopAnimation()
                 self.ani = None
                 self.figure.clear()
 
